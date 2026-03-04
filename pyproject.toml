@@ -1,6 +1,6 @@
 [project]
 name = "spike-encoding"
-version = "1.8.1"
+version = "1.8.2"
 description = "A spike-encoding repository for converting conventional data to spiking data. Includes trainable encoding methods and PyTorch compatibility, as well as integration of some common datasets."
 readme = "README.md"
 requires-python = ">=3.10"
