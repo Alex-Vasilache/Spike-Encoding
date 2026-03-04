@@ -30,13 +30,29 @@ The repository provides common methods of encoding scalar values to spike trains
 For each encoder, there are examples on its usage in the examples folder. In general, encoders are created by creating an instance of its class and then calling its encode method. Optionally, parameters can be given or determined through and optimization method.We will see this in more detail in the following sections.
 
 # Loading pre-installed datasets
-There will be some utility for loading datasets. Right now, only Spiking Heidelberg Digits is supported (https://zenkelab.org/resources/spiking-heidelberg-datasets-shd/). You can load it as follows:
+There will be some utility for loading datasets. The following datasets are currently supported.
+
+## Spiking Heidelberg Digits (SHD)
+Spiking Heidelberg Digits (https://zenkelab.org/resources/spiking-heidelberg-datasets-shd/) can be loaded as follows:
 
 ```python
 from spike_encoding.datasets import load_processed_shd
 
 loaded = load_processed_shd(100)
 ```
+
+## Google Speech Commands (GSC)
+Google Speech Commands (https://ai.googleblog.com/2017/08/launching-speech-commands-dataset.html) can be loaded as follows:
+
+```python
+from spike_encoding.datasets import load_processed_gsc
+
+loaded = load_processed_gsc(version=2)
+```
+
+The `version` parameter selects the GSC dataset version (default: `2`).
+
+The first call processes all `.wav` files and caches the result as `.npy` files alongside the dataset. Subsequent calls load directly from the cache and are near-instant.
 
 # Ben's spiker algorithm (BSA)
 BSA[^1] encodes signals into spikes by using a combination of FIR (Finite Impulse Response) filtering and error comparison. For each timestep, it compares the error between the signal and a potential spike's filter response. If adding a spike at the current timestep would reduce the overall error by more than a threshold amount, a spike is generated and the filter response is subtracted from the signal. This process continues for each timestep, effectively encoding the signal into a series of spikes that can later be decoded by applying the same FIR filter to the spike train.
